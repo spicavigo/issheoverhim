@@ -1,0 +1,87 @@
+<html>
+<head>
+  <title>{{ title }} </title>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+  <script src="//code.jquery.com/jquery-1.8.3.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  
+  <script src="/static/js/typeahead.bundle.min.js"></script>
+  <script src="/static/js/jquery.unicornblast.js"></script>
+  <script src="/static/js/main.js"></script>
+  <script src="/static/js/fb.js"></script>
+
+  <link rel="stylesheet" href="/static/css/typeahead.css">
+  <link rel="stylesheet" href="/static/css/main.css">
+  <script>
+    var SGENDER = "{{sgender}}";;
+    var OGENDER = "{{ogender}}";
+    var INITMETHOD = "{{initmethod}}";
+  </script>
+</head>
+<body>
+  <div id="fb-root"></div>
+
+  <div class="container-fluid hide" id="newpost">
+    <p class="row form-group">IS</p>
+    <div class="row form-group">
+      <input class="typeahead" type="text" id="subject" placeholder="Start typing name of a Friend" data-provide="typeahead">
+    </div>
+    <p class="row">OVER</p>
+    <div class="row form-group">
+      <input class="typeahead" type="text" id="object" placeholder="Start typing name of a Friend" data-provide="typeahead">
+    </div>
+    
+    <div class="row form-group" >
+      <select id="answer" onchange="answerChange()">
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+        <option value="ask">Ask</option>
+      </select>
+    </div>
+
+    <div class="row form-group" >
+      <select id="language"></select>
+    </div>
+
+    <div class="row form-group">
+      <span class="btn btn-primary " id="submit">Create Post</span>
+    </div>
+  </div>
+
+  <div class="container hide" id="loginbtn">
+    <div class="row btn btn-primary btn-lg" id="login" onclick="FB.login()">Login</div>
+  </div>
+  
+  {% if post %}
+  <div class="container hide" id="postitem">
+    <select class="row" id="postlanguage"></select>
+    <div id="postanswer" class="unicorn">{% if post.answer == "1" %}Yes{% else %}No{% endif %}</div>
+  </div>
+  {% endif %}
+
+  {% if post %}
+  <div class="container hide" id="edititem">
+    <select class="row" id="editlanguage"></select>
+    <div class="row">{{title}}</div>
+    <div class="row form-group" >
+      <select id="editanswer" onchange="answerChange()">
+        <option value="0" {% if post.answer == "0" %}selected{% endif %}>No</option>
+        <option value="1" {% if post.answer == "1" %}selected{% endif %}>Yes</option>
+      </select>
+    </div>
+    <div class="row form-group">
+      <span class="btn btn-primary " onclick='update("{{post.key().name()}}", "{{post.hashkey}}")'>Update Post</span>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="container hide" id="posts">
+    <!--div class="row">
+      <span class="btn btn-success" id="newpost">Create New Post</span>
+    </div-->
+    <div id="postscontainer"></div>
+  </div>
+  
+</body>
+</html>

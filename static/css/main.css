@@ -1,0 +1,16 @@
+body{
+	text-align:center;
+	font-size:24px;
+}
+
+.hide{
+	display:none;
+}
+
+.container-fluid{
+
+}
+
+.row{
+	vertical-align: middle;
+}
